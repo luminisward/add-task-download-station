@@ -475,7 +475,7 @@
       a.addEventListener("click", (e) => {
         e.preventDefault();
         addUrl(a.href).then((res) => {
-          console.log("addUrl Success: " + res);
+          console.log("addUrl Success: ", res);
         }).catch((err) => {
           throw err;
         });
