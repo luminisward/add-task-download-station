@@ -63,7 +63,7 @@ const queryTask = async () => {
 
 const addUrl = async (url: string) => {
   const sid = await getSid();
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     GM_xmlhttpRequest({
       method: "POST",
       url: serverUrl.value + "/downloadstation/V4/Task/AddUrl",

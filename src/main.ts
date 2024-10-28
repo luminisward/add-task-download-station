@@ -47,10 +47,15 @@ GM_registerMenuCommand("Settings", () => {
 const anchors = document.getElementsByTagName("a");
 for (const a of Array.from(anchors)) {
   if (a.href.startsWith("magnet:")) {
-    console.log(a);
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      addUrl(a.href);
+      addUrl(a.href)
+        .then((res) => {
+          console.log("addUrl Success: " + res);
+        })
+        .catch((err) => {
+          throw err;
+        });
     });
   }
 }
