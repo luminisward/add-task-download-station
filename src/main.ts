@@ -51,7 +51,7 @@ for (const a of Array.from(anchors)) {
       e.preventDefault();
       addUrl(a.href)
         .then((res) => {
-          console.log("addUrl Success: " + res);
+          console.log("addUrl Success: ", res);
         })
         .catch((err) => {
           throw err;
