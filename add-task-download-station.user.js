@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name       add-task-download-station
 // @namespace  https://github.com/luminisward
-// @version    0.0.1
+// @version    0.0.2
 // @author     luminisward
 // @match      *://*/*
-// @require    https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js
+// @require    https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.prod.js
 // @grant      GM_deleteValue
 // @grant      GM_getValue
 // @grant      GM_registerMenuCommand
@@ -62,7 +62,7 @@
     return { isActive: vue.readonly(isActive), pause, resume, eventFilter };
   }
   function getLifeCycleTarget(target) {
-    return target || vue.getCurrentInstance();
+    return vue.getCurrentInstance();
   }
   function watchWithFilter(source, cb, options = {}) {
     const {
@@ -222,7 +222,7 @@
       },
       initOnMounted
     } = options;
-    const data = (shallow ? vue.shallowRef : vue.ref)(typeof defaults2 === "function" ? defaults2() : defaults2);
+    const data = (shallow ? vue.shallowRef : vue.ref)(defaults2);
     if (!storage) {
       try {
         storage = getSSRHandler("getDefaultStorage", () => {
@@ -342,19 +342,15 @@
   const user = useStorage("user", "", GMStorage);
   const password = useStorage("password", "", GMStorage);
   const serverUrl = useStorage("serverUrl", "", GMStorage);
-  const _hoisted_1 = /* @__PURE__ */ vue.createElementVNode("h1", null, "Settings", -1);
-  const _hoisted_2 = { action: "" };
-  const _hoisted_3 = /* @__PURE__ */ vue.createElementVNode("label", { for: "user" }, "User", -1);
-  const _hoisted_4 = /* @__PURE__ */ vue.createElementVNode("label", { for: "email" }, "Password", -1);
-  const _hoisted_5 = /* @__PURE__ */ vue.createElementVNode("label", { for: "url" }, "Server Url", -1);
+  const _hoisted_1 = { action: "" };
   const _sfc_main = /* @__PURE__ */ vue.defineComponent({
     __name: "SettingsDialog",
     setup(__props) {
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("div", null, [
-          _hoisted_1,
-          vue.createElementVNode("form", _hoisted_2, [
-            _hoisted_3,
+          _cache[6] || (_cache[6] = vue.createElementVNode("h1", null, "Settings", -1)),
+          vue.createElementVNode("form", _hoisted_1, [
+            _cache[3] || (_cache[3] = vue.createElementVNode("label", { for: "user" }, "User", -1)),
             vue.withDirectives(vue.createElementVNode("input", {
               id: "user",
               "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => vue.isRef(user) ? user.value = $event : null),
@@ -362,7 +358,7 @@
             }, null, 512), [
               [vue.vModelText, vue.unref(user)]
             ]),
-            _hoisted_4,
+            _cache[4] || (_cache[4] = vue.createElementVNode("label", { for: "email" }, "Password", -1)),
             vue.withDirectives(vue.createElementVNode("input", {
               id: "password",
               "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => vue.isRef(password) ? password.value = $event : null),
@@ -370,7 +366,7 @@
             }, null, 512), [
               [vue.vModelText, vue.unref(password)]
             ]),
-            _hoisted_5,
+            _cache[5] || (_cache[5] = vue.createElementVNode("label", { for: "url" }, "Server Url", -1)),
             vue.withDirectives(vue.createElementVNode("input", {
               id: "url",
               "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => vue.isRef(serverUrl) ? serverUrl.value = $event : null),
@@ -473,5 +469,15 @@
       })()
     );
   });
+  const anchors = document.getElementsByTagName("a");
+  for (const a of Array.from(anchors)) {
+    if (a.href.startsWith("magnet:")) {
+      console.log(a);
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        addUrl(a.href);
+      });
+    }
+  }
 
 })(Vue);
