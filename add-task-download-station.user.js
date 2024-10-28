@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       add-task-download-station
 // @namespace  https://github.com/luminisward
-// @version    0.0.2
+// @version    0.0.3
 // @author     luminisward
 // @match      *://*/*
 // @require    https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.prod.js
@@ -412,7 +412,7 @@
   };
   const addUrl = async (url) => {
     const sid = await getSid();
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       _GM_xmlhttpRequest({
         method: "POST",
         url: serverUrl.value + "/downloadstation/V4/Task/AddUrl",
@@ -472,10 +472,13 @@
   const anchors = document.getElementsByTagName("a");
   for (const a of Array.from(anchors)) {
     if (a.href.startsWith("magnet:")) {
-      console.log(a);
       a.addEventListener("click", (e) => {
         e.preventDefault();
-        addUrl(a.href);
+        addUrl(a.href).then((res) => {
+          console.log("addUrl Success: " + res);
+        }).catch((err) => {
+          throw err;
+        });
       });
     }
   }
