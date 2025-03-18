@@ -1,18 +1,24 @@
-import { user, password, serverUrl } from "./store";
+import {
+  user,
+  password,
+  serverUrl,
+  basicAuthPassword,
+  basicAuthUser,
+} from "./store";
 
 let sidCache: Promise<string> | null = null;
 const getSid = async () => {
   if (sidCache === null) {
     sidCache = new Promise<string>((resolve, reject) => {
       const data = new URLSearchParams(
-        Object.entries({ user: unref(user), pwd: btoa(unref(password)) }),
+        Object.entries({ user: unref(user), pwd: btoa(unref(password)) })
       );
       GM_xmlhttpRequest({
         method: "POST",
         url: serverUrl.value + "/cgi-bin/authLogin.cgi",
         data,
-        user: unref(user),
-        password: password.value,
+        user: basicAuthUser.value,
+        password: basicAuthPassword.value,
         onload: (response) => {
           const sidNode =
             response.responseXML?.getElementsByTagName("authSid")[0];
@@ -41,7 +47,7 @@ const queryTask = async () => {
       type: "all",
       status: "all",
       sid,
-    }),
+    })
   );
 
   return new Promise((resolve, reject) => {
@@ -49,8 +55,8 @@ const queryTask = async () => {
       method: "POST",
       url: serverUrl.value + "/downloadstation/V4/Task/Query",
       data,
-      user: user.value,
-      password: password.value,
+      user: basicAuthUser.value,
+      password: basicAuthPassword.value,
       onload: (response) => {
         resolve(JSON.parse(response.responseText));
       },
@@ -67,15 +73,15 @@ const addUrl = async (url: string) => {
     GM_xmlhttpRequest({
       method: "POST",
       url: serverUrl.value + "/downloadstation/V4/Task/AddUrl",
-      user: user.value,
-      password: password.value,
+      user: basicAuthUser.value,
+      password: basicAuthPassword.value,
       data: new URLSearchParams(
         Object.entries({
           temp: "Download",
           move: "Complete",
           url,
           sid,
-        }),
+        })
       ),
       onload: (response) => {
         resolve(JSON.parse(response.responseText));

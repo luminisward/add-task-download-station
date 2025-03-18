@@ -15,5 +15,7 @@ const GMStorage: StorageLike = {
 const user = useStorage("user", "", GMStorage);
 const password = useStorage("password", "", GMStorage);
 const serverUrl = useStorage("serverUrl", "", GMStorage);
+const basicAuthUser = useStorage("basicAuthUser", "", GMStorage);
+const basicAuthPassword = useStorage("basicAuthPassword", "", GMStorage);
 
-export { user, password, serverUrl };
+export { user, password, serverUrl, basicAuthPassword, basicAuthUser };
