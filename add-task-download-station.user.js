@@ -342,6 +342,8 @@
   const user = useStorage("user", "", GMStorage);
   const password = useStorage("password", "", GMStorage);
   const serverUrl = useStorage("serverUrl", "", GMStorage);
+  const basicAuthUser = useStorage("basicAuthUser", "", GMStorage);
+  const basicAuthPassword = useStorage("basicAuthPassword", "", GMStorage);
   const _hoisted_1 = { action: "" };
   const _sfc_main = /* @__PURE__ */ vue.defineComponent({
     __name: "SettingsDialog",
@@ -390,8 +392,8 @@
           method: "POST",
           url: serverUrl.value + "/cgi-bin/authLogin.cgi",
           data,
-          user: vue.unref(user),
-          password: password.value,
+          user: basicAuthUser.value,
+          password: basicAuthPassword.value,
           onload: (response) => {
             var _a;
             const sidNode = (_a = response.responseXML) == null ? void 0 : _a.getElementsByTagName("authSid")[0];
@@ -416,8 +418,8 @@
       _GM_xmlhttpRequest({
         method: "POST",
         url: serverUrl.value + "/downloadstation/V4/Task/AddUrl",
-        user: user.value,
-        password: password.value,
+        user: basicAuthUser.value,
+        password: basicAuthPassword.value,
         data: new URLSearchParams(
           Object.entries({
             temp: "Download",
