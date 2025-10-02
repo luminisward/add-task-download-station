@@ -4,6 +4,8 @@ import {
   serverUrl,
   basicAuthPassword,
   basicAuthUser,
+  temp,
+  move,
 } from "./store";
 
 let sidCache: Promise<string> | null = null;
@@ -77,8 +79,8 @@ const addUrl = async (url: string) => {
       password: basicAuthPassword.value,
       data: new URLSearchParams(
         Object.entries({
-          temp: "Download",
-          move: "Complete",
+          temp: temp.value,
+          move: move.value,
           url,
           sid,
         })

@@ -17,5 +17,15 @@ const password = useStorage("password", "", GMStorage);
 const serverUrl = useStorage("serverUrl", "", GMStorage);
 const basicAuthUser = useStorage("basicAuthUser", "", GMStorage);
 const basicAuthPassword = useStorage("basicAuthPassword", "", GMStorage);
+const temp = useStorage("temp", "", GMStorage);
+const move = useStorage("move", "", GMStorage);
 
-export { user, password, serverUrl, basicAuthPassword, basicAuthUser };
+export {
+  user,
+  password,
+  serverUrl,
+  basicAuthPassword,
+  basicAuthUser,
+  temp,
+  move,
+};
