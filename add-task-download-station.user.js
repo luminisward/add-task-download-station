@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name       add-task-download-station
 // @namespace  https://github.com/luminisward
-// @version    0.0.3
+// @version    0.0.4
 // @author     luminisward
 // @match      *://*/*
 // @require    https://cdn.jsdelivr.net/npm/vue@3.5.12/dist/vue.global.prod.js
@@ -344,15 +344,17 @@
   const serverUrl = useStorage("serverUrl", "", GMStorage);
   const basicAuthUser = useStorage("basicAuthUser", "", GMStorage);
   const basicAuthPassword = useStorage("basicAuthPassword", "", GMStorage);
+  const temp = useStorage("temp", "", GMStorage);
+  const move = useStorage("move", "", GMStorage);
   const _hoisted_1 = { action: "" };
   const _sfc_main = /* @__PURE__ */ vue.defineComponent({
     __name: "SettingsDialog",
     setup(__props) {
       return (_ctx, _cache) => {
         return vue.openBlock(), vue.createElementBlock("div", null, [
-          _cache[6] || (_cache[6] = vue.createElementVNode("h1", null, "Settings", -1)),
+          _cache[10] || (_cache[10] = vue.createElementVNode("h1", null, "Settings", -1)),
           vue.createElementVNode("form", _hoisted_1, [
-            _cache[3] || (_cache[3] = vue.createElementVNode("label", { for: "user" }, "User", -1)),
+            _cache[5] || (_cache[5] = vue.createElementVNode("label", { for: "user" }, "User", -1)),
             vue.withDirectives(vue.createElementVNode("input", {
               id: "user",
               "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => vue.isRef(user) ? user.value = $event : null),
@@ -360,7 +362,7 @@
             }, null, 512), [
               [vue.vModelText, vue.unref(user)]
             ]),
-            _cache[4] || (_cache[4] = vue.createElementVNode("label", { for: "email" }, "Password", -1)),
+            _cache[6] || (_cache[6] = vue.createElementVNode("label", { for: "email" }, "Password", -1)),
             vue.withDirectives(vue.createElementVNode("input", {
               id: "password",
               "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => vue.isRef(password) ? password.value = $event : null),
@@ -368,13 +370,29 @@
             }, null, 512), [
               [vue.vModelText, vue.unref(password)]
             ]),
-            _cache[5] || (_cache[5] = vue.createElementVNode("label", { for: "url" }, "Server Url", -1)),
+            _cache[7] || (_cache[7] = vue.createElementVNode("label", { for: "url" }, "Server Url", -1)),
             vue.withDirectives(vue.createElementVNode("input", {
               id: "url",
               "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => vue.isRef(serverUrl) ? serverUrl.value = $event : null),
               type: "text"
             }, null, 512), [
               [vue.vModelText, vue.unref(serverUrl)]
+            ]),
+            _cache[8] || (_cache[8] = vue.createElementVNode("label", { for: "temp" }, "temp", -1)),
+            vue.withDirectives(vue.createElementVNode("input", {
+              id: "temp",
+              "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => vue.isRef(temp) ? temp.value = $event : null),
+              type: "text"
+            }, null, 512), [
+              [vue.vModelText, vue.unref(temp)]
+            ]),
+            _cache[9] || (_cache[9] = vue.createElementVNode("label", { for: "move" }, "move", -1)),
+            vue.withDirectives(vue.createElementVNode("input", {
+              id: "move",
+              "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => vue.isRef(move) ? move.value = $event : null),
+              type: "text"
+            }, null, 512), [
+              [vue.vModelText, vue.unref(move)]
             ])
           ])
         ]);
@@ -422,8 +440,8 @@
         password: basicAuthPassword.value,
         data: new URLSearchParams(
           Object.entries({
-            temp: "Download",
-            move: "Complete",
+            temp: temp.value,
+            move: move.value,
             url,
             sid
           })
